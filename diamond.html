@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Diamond</title>
+
+    <style>
+      body {margin: 0;}
+    </style>
+  </head>
+
+  <body>
+    <script src="three.js"></script>
+    <script src="OrbitControls.js"></script>
+<script>
+let camera, scene, renderer, controls, octahedron;
+
+function init() {
+  scene = new THREE.Scene();
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+
+  scene.background = new THREE.CubeTextureLoader().setPath('room/').load( [  'posx.jpg','negx.jpg',  'posy.jpg','negy.jpg','posz.jpg',  'negz.jpg']);
+  var ambient = new THREE.AmbientLight( 0xffffff );
+  scene.add( ambient );
+
+  pointLight = new THREE.PointLight( 0xffffff, 2 );
+  scene.add( pointLight );
+  camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 25000);
+  camera.position.z = 700; // back camera out
+  camera.position.y = 200; // move camera up
+  scene.add(camera);
+
+  let light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(1, 1, 1);
+  scene.add(light);
+
+  let material = new THREE.MeshBasicMaterial({envMap: scene.background, side: THREE.DoubleSide});
+  var material3 = new THREE.MeshPhongMaterial( { color: 0xccddff, envMap: scene.background, refractionRatio: 0.98, opacity: 0.5, transparent:true } );
+
+  let octahedronGeometry = new THREE.OctahedronGeometry(100, 0);
+   octahedron = new THREE.Mesh(octahedronGeometry, material3);
+  octahedron.position.y = 400;
+  octahedron.castShadow=true;
+  scene.add(octahedron);
+
+  var geometry = new THREE.BoxGeometry( 200, 300, 200 );
+  var material2 = new THREE.MeshBasicMaterial( {color: 0x000000} );
+  var cube = new THREE.Mesh( geometry, material2 );
+  cube.position.y=150;
+  scene.add( cube );
+
+  var lasergeometry = new THREE.BoxGeometry( 5, 1100, 5 );
+  var lasermaterial = new THREE.MeshBasicMaterial( {color: 0xFF0000} );
+  var laser = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser.position.x=120;
+  laser.position.y=287;
+  laser.rotation.x= .785;
+  laser.rotation.z= .785;
+
+  scene.add( laser );
+
+  var laser2 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser.position.x=120;
+  laser.position.y=287;
+  laser.rotation.x= .785;
+  laser.rotation.z= .785;
+
+  //scene.add( laser );
+  var laser3 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser.position.x=120;
+  laser.position.y=287;
+  laser.rotation.x= .785;
+  laser.rotation.z= .785;
+
+  //scene.add( laser );
+  var laser4 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser4.position.z=120;
+  laser4.position.y= 287;
+  laser4.rotation.x= .8;
+  laser4.rotation.y=-.1;
+  laser4.rotation.z= 1.309;
+
+  scene.add( laser4 );
+
+
+
+  let planeGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+  let planeMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+  let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  plane.rotation.x = Math.PI / -2;
+  scene.add(plane);
+
+  renderer = new THREE.WebGLRenderer({alpha: 1, antialias: true});
+  renderer.setSize(width, height);
+
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  document.body.appendChild(renderer.domElement);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  octahedron.rotation.y+=.01;
+
+  renderer.render(scene, camera);
+  controls.update();
+}
+
+init();
+animate();
+</script>
+</body>
+</html>
