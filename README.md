@@ -1,5 +1,5 @@
 # The Ultimate Heist
-##A Drawing On The Web Final Project##
+**A Drawing On The Web Final Project**
 The idea behind this project is to capture the experience of a heist movie’s prototypical sections as moments trapped in time. From my extensive viewing of such films, I believe they exist of four core scenes:
 
 1.	The introduction
