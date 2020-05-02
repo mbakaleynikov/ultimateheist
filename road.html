@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <title>HTML Canvas Animation</title>
+
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        height: 60vh;
+          overflow: hidden; /* Hide scrollbars */
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(270deg, #e91c1c, #3e17f2);
+background-size: 400% 400%;
+-webkit-animation: AnimationName 2s ease infinite;
+-moz-animation: AnimationName 2s ease infinite;
+animation: AnimationName 2s ease infinite;
+      }
+
+      @-webkit-keyframes AnimationName {
+         0%{background-position:0% 50%}
+         50%{background-position:100% 50%}
+         100%{background-position:0% 50%}
+     }
+     @-moz-keyframes AnimationName {
+         0%{background-position:0% 50%}
+         50%{background-position:100% 50%}
+         100%{background-position:0% 50%}
+     }
+     @keyframes AnimationName {
+         0%{background-position:0% 50%}
+         50%{background-position:100% 50%}
+         100%{background-position:0% 50%}
+     }
+
+      #div1 {
+  position: relative;
+margin-left:0px;
+height: 170px;
+  width: 265px;
+  perspective: 100px;
+}
+
+#div2 {
+  position: absolute;
+padding: 50px;
+padding-top: 0px;
+padding-bottom:0px;
+  background-color: red;
+  background: rgba(100,100,100,0.5);
+  transform-style: preserve-3d;
+  transform: rotateX(50deg);
+}
+#canvas1{
+  padding-top: 0px;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    <div id="div1">
+  <div id="div2">
+<canvas id="canvas1" width="170" height="250" style="width: 100px; height: 250px;"></canvas>
+
+  </div>
+</div>
+
+
+    <script>
+      const canvas = document.querySelector('canvas');
+      const context = canvas.getContext('2d');
+    //
+
+      let width;
+      let height;
+
+      // set the number of canvas pixels, scaled for screen resolution
+      let pxScale = window.devicePixelRatio;
+
+      // variables for drawing the box
+      let xPos = 75;
+      let yPos = 0;
+      let yPos2=100;
+      let yPos3=200;
+      let boxWidth = 20;
+      let boxHeight = 50;
+
+      // how many pixels the box should move per function call
+      let pixelShift = 5;
+
+      function setup() {
+        // fixed canvas size
+        width = canvas.width;
+        height = canvas.height;
+
+        // set the CSS display size
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+
+        canvas.width = width * pxScale;
+        canvas.height = height * pxScale;
+
+        // normalize the coordinate system
+        context.scale(pxScale, pxScale);
+
+        draw();
+      }
+
+      function draw() {
+        // clear canvas
+        context.clearRect(0, 0, width, height);
+
+        // draw box
+        context.fillRect(xPos, yPos, boxWidth, boxHeight);
+
+        context.fillRect(xPos, yPos2, boxWidth, boxHeight);
+        context.fillRect(xPos, yPos3, boxWidth, boxHeight);
+
+
+        // update the x position
+        yPos += pixelShift;
+        yPos2+=pixelShift;
+        yPos3+= pixelShift;
+        // reverse animation at both ends
+        if (yPos > height - boxHeight+50) {
+          yPos=-50;
+        }
+        if (yPos2 > height - boxHeight+50) {
+          yPos2=-50;
+        }
+        if (yPos3 > height - boxHeight+50) {
+          yPos3=-50;
+        }
+        // recursive function call
+        requestAnimationFrame(draw);
+      }
+
+      // when the whole page has loaded, including all dependent resources
+      window.addEventListener('load', setup);
+    </script>
+
+</body></html>
