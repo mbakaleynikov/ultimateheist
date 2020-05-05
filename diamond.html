@@ -27,9 +27,9 @@ function init() {
   pointLight = new THREE.PointLight( 0xffffff, 2 );
   //scene.add( pointLight );
   camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 25000);
-  camera.position.z = 1400; // back camera out
-  camera.position.y = 800; // move camera up
-  camera.rotation.y = 50 * Math.PI / 180
+  camera.position.z = 2500; // back camera out
+  camera.position.y = 1400; // move camera up
+  camera.rotation.y = 20 * Math.PI / 180
   scene.add(camera);
 
   let light = new THREE.DirectionalLight(0xffffff, 1);
@@ -85,25 +85,50 @@ function init() {
 
 
 
+  let textureLoader = new THREE.TextureLoader();
 
 
+  textureLoader.load('steel.jpg', function(texture) {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set( 20, 20 );
+  let material22 = new THREE.MeshStandardMaterial({map: texture});
+  var geometry99 = new THREE.BoxGeometry( 4000, 4000, 30 );
+
+  var cube999 = new THREE.Mesh( geometry99, material22 );
+  var cube9999 = new THREE.Mesh( geometry99, material22 );
+  cube999.position.z=1250;
+  cube999.position.y=150;
+  cube999.position.x=2550;
+  cube9999.position.z=1250;
+  cube9999.position.y=150;
+  cube9999.position.x=-2550;
+  scene.add(cube999);
+  scene.add(cube9999);
+});
+
+  textureLoader.load('brick.jpg', function(texture) {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set( 20, 20 );
+  let material2 = new THREE.MeshStandardMaterial({map: texture});
 
 
+  var geometry2 = new THREE.BoxGeometry( 10000, 10000, 30 );
 
-  var geometry = new THREE.BoxGeometry( 200, 300, 200 );
-  var material2 = new THREE.MeshBasicMaterial( {color: 0x000000} );
-  var cube = new THREE.Mesh( geometry, material2 );
-  cube.position.y=150;
-  scene.add( cube );
-
-  var geometry2 = new THREE.BoxGeometry( 3000, 3000, 30 );
   var cube2 = new THREE.Mesh( geometry2, material2 );
+
+
+
   cube2.position.z=-1500;
   cube2.position.y=150;
 
+
+
   scene.add( cube2 );
 
-  var geometry3 = new THREE.BoxGeometry( 20, 3000, 3000 );
+
+  var geometry3 = new THREE.BoxGeometry( 20, 10000, 10000 );
   var cube3 = new THREE.Mesh( geometry3, material2 );
   var cube4 = new THREE.Mesh( geometry3, material2 );
 
@@ -115,8 +140,13 @@ function init() {
   cube4.position.x=-1500;
   scene.add( cube3 );
   scene.add( cube4 );
+});
+var geometry = new THREE.BoxGeometry( 200, 300, 200 );
+let material9999 = new THREE.MeshBasicMaterial({color:0x000000});
 
-
+var cube = new THREE.Mesh( geometry, material9999 );
+cube.position.y=150;
+scene.add( cube );
 
   var lasergeometry = new THREE.BoxGeometry( 5, 11000, 5 );
   var lasermaterial = new THREE.MeshBasicMaterial( {color: 0xFF0000} );
@@ -176,16 +206,37 @@ function init() {
 
   scene.add( laser6 );
   var laser7 = new THREE.Mesh( lasergeometry, lasermaterial );
-  laser7.position.z=120;
+  laser7.position.z=-320;
   laser7.position.y= 287;
+  laser7.position.x=500;
+
   laser7.rotation.x= .8;
   laser7.rotation.y=-.1;
-  laser7.rotation.z= 1.309;
+  laser7.rotation.z= -1.309;
 
   scene.add( laser7 );
+  var laser8 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser8.position.z=-320;
+  laser8.position.y= 287;
+  laser8.position.x=500;
+
+  laser8.rotation.x= .8;
+  laser8.rotation.y=-.1;
+  laser8.rotation.z= -.6;
+
+  scene.add( laser8 );
+  var laser9 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser9.position.z=520;
+  laser9.position.y= 287;
+  laser9.position.x=500;
+
+  laser9.rotation.x= .8;
+  laser9.rotation.y=-.1;
+  laser9.rotation.z= -1.3;
+
+  scene.add( laser9 );
 
 
-  let textureLoader = new THREE.TextureLoader();
 
   textureLoader.load('briefcase/tile.jpg', function(texture) {
     texture.wrapS = THREE.RepeatWrapping;
@@ -214,8 +265,8 @@ function animate() {
   octahedron.rotation.y+=.01;
 
   renderer.render(scene, camera);
-  controls.enableZoom = false;
-  //controls.enableRotate = false;
+  //controls.enableZoom = false;
+  controls.enableRotate = false;
   controls.update();
 }
 

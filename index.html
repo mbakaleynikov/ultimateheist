@@ -3,17 +3,50 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>HTML Canvas</title>
+    <title>Ultimate Heist!</title>
     <link rel="stylesheet" href="styles.css">
     <style>
       body{
 
         background-color: coral;
       }
+    canvas{
+        transition: all 0.3s ease-in-out 0s;
+      }
+
+
+      canvas:hover
+{
+    cursor: default;
+      animation: rotation 1s infinite linear;
+}
+
+
+@keyframes rotation {
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+
+
+}
+
       #frame{
         text-align: center;
       }
       h1 {
+        padding-bottom: 120px;
+        font-family: "Lucida Console", Courier, monospace;
+
+        font-size: xxx-large;
         text-shadow: 0 1px 0 #ccc,
                      0 2px 0 #c9c9c9,
                      0 3px 0 #bbb,
@@ -67,8 +100,10 @@
     const canvas3 = document.querySelectorAll('canvas')[2];
     const context3 = canvas3.getContext('2d');
     canvas.addEventListener("click", on_click1, false);
-        canvas2.addEventListener("click", on_click2, false);
-            canvas3.addEventListener("click", on_click3, false);
+    canvas2.addEventListener("click", on_click2, false);
+    canvas3.addEventListener("click", on_click3, false);
+
+
 
 
   function on_click1(e) {
@@ -78,11 +113,20 @@
   function on_click2(e) {
     window.location = "road.html";
 
-}function on_click3(e) {
+}
+function on_click3(e) {
 
     window.location = "briefcase.html";
 
 }
+
+
+
+
+
+
+
+
           let width;
           let height;
 
