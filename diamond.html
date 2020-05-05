@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-//add realistic texture to pillar
 <head>
     <meta charset="utf-8">
     <title>Diamond</title>
@@ -26,15 +25,16 @@ function init() {
   scene.add( ambient );
 
   pointLight = new THREE.PointLight( 0xffffff, 2 );
-  scene.add( pointLight );
+  //scene.add( pointLight );
   camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 25000);
-  camera.position.z = 700; // back camera out
-  camera.position.y = 200; // move camera up
+  camera.position.z = 1400; // back camera out
+  camera.position.y = 800; // move camera up
+  camera.rotation.y = 50 * Math.PI / 180
   scene.add(camera);
 
   let light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(1, 1, 1);
-  scene.add(light);
+  //scene.add(light);
 
   let material = new THREE.MeshBasicMaterial({envMap: scene.background, side: THREE.DoubleSide});
   var material3 = new THREE.MeshPhongMaterial( { color: 0xccddff, envMap: scene.background, refractionRatio: 0.98, opacity: 0.5 } );
@@ -96,6 +96,28 @@ function init() {
   cube.position.y=150;
   scene.add( cube );
 
+  var geometry2 = new THREE.BoxGeometry( 3000, 3000, 30 );
+  var cube2 = new THREE.Mesh( geometry2, material2 );
+  cube2.position.z=-1500;
+  cube2.position.y=150;
+
+  scene.add( cube2 );
+
+  var geometry3 = new THREE.BoxGeometry( 20, 3000, 3000 );
+  var cube3 = new THREE.Mesh( geometry3, material2 );
+  var cube4 = new THREE.Mesh( geometry3, material2 );
+
+  cube3.position.y=150;
+  cube3.position.z=0;
+  cube3.position.x=1500;
+  cube4.position.y=150;
+  cube4.position.z=0;
+  cube4.position.x=-1500;
+  scene.add( cube3 );
+  scene.add( cube4 );
+
+
+
   var lasergeometry = new THREE.BoxGeometry( 5, 11000, 5 );
   var lasermaterial = new THREE.MeshBasicMaterial( {color: 0xFF0000} );
   var laser = new THREE.Mesh( lasergeometry, lasermaterial );
@@ -128,14 +150,56 @@ function init() {
   laser4.rotation.z= 1.309;
 
   scene.add( laser4 );
+  var laser4 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser4.position.z=120;
+  laser4.position.y= 287;
+  laser4.rotation.x= .8;
+  laser4.rotation.y=-.1;
+  laser4.rotation.z= 1.309;
+
+  scene.add( laser4 );
+  var laser5 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser5.position.z=120;
+  laser5.position.y= 287;
+  laser5.rotation.x= .8;
+  laser5.rotation.y=-1;
+  laser5.rotation.z= .9;
+
+  scene.add( laser5 );
+  var laser6 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser6.position.z=120;
+  laser6.position.y= 287;
+  laser6.position.x=200;
+  laser6.rotation.x= .8;
+  laser6.rotation.y=-.1;
+  laser6.rotation.z= .4;
+
+  scene.add( laser6 );
+  var laser7 = new THREE.Mesh( lasergeometry, lasermaterial );
+  laser7.position.z=120;
+  laser7.position.y= 287;
+  laser7.rotation.x= .8;
+  laser7.rotation.y=-.1;
+  laser7.rotation.z= 1.309;
+
+  scene.add( laser7 );
 
 
+  let textureLoader = new THREE.TextureLoader();
 
-  let planeGeometry = new THREE.PlaneGeometry(10000, 10000, 10, 10);
-  let planeMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
-  let plane = new THREE.Mesh(planeGeometry, planeMaterial);
-  plane.rotation.x = Math.PI / -2;
-  scene.add(plane);
+  textureLoader.load('briefcase/tile.jpg', function(texture) {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set( 20, 20 );
+    let planeGeometry = new THREE.PlaneGeometry(10000, 10000, 10, 10);
+    let planeMaterial = new THREE.MeshStandardMaterial({map: texture});
+    let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    plane.rotation.x = Math.PI / -2;
+    scene.add(plane);
+
+  });
+
+
 
   renderer = new THREE.WebGLRenderer({alpha: 1, antialias: true});
   renderer.setSize(width, height);
@@ -150,6 +214,8 @@ function animate() {
   octahedron.rotation.y+=.01;
 
   renderer.render(scene, camera);
+  controls.enableZoom = false;
+  //controls.enableRotate = false;
   controls.update();
 }
 

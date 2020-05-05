@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title> Betrayal! </title>
+<style>
+      body {
+        margin: 0;
+      }
+      #info {
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	text-align: center;
+	z-index: 100;
+	display:block;
+}
+    </style>
+  </head>
+  <body>
+<div id="info">CLICK TO OPEN!</div>
+      <script src="three.js"></script>
+      <script src="OrbitControls.js"></script>
+
+  </body>
+
+
+
+<script>
+  let camera, scene, renderer, controls, pivot;
+
+  function init() {
+    scene = new THREE.Scene();
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 25000);
+    camera.position.z = 700;  // back camera out
+    camera.position.y = 200; // move camera up
+    scene.add(camera);
+
+    let light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(1, 1, 1);
+    scene.add(light);
+
+    let spotlight = new THREE.SpotLight(0xffffff, 0.8, 2000);
+    spotlight.position.set(500, 500, 500);
+    spotlight.castShadow = true;
+
+    // shadow map texture width in pixels
+    spotlight.shadow.mapSize.width = 4096;
+    spotlight.shadow.mapSize.height = 4096;
+
+    // perspective shadow camera frustum near parameter
+    spotlight.shadow.camera.near = 500;
+    // perspective shadow camera frustum far parameter
+    spotlight.shadow.camera.far = 1500;
+    // perspective shadow camera frustum field of view
+    spotlight.shadow.camera.fov = 45;
+
+    scene.add(spotlight);
+
+    // spotlight shadow helper
+    // let helper = new THREE.CameraHelper(spotlight.shadow.camera);
+    // scene.add(helper);
+
+    // instantiate loader (once is enough for all shapes)
+    let textureLoader = new THREE.TextureLoader();
+scene.background = new THREE.Color( 0xadd8e6 );
+     pivot = new THREE.Object3D();
+    pivot.position.z=-63;
+    scene.add( pivot );
+    textureLoader.load('briefcase/note.jpg', function(texture) {
+      let material9 = new THREE.MeshStandardMaterial({map: texture});
+      const note1 = new THREE.BoxBufferGeometry(50, 3, 75);
+      let noteone = new THREE.Mesh(note1, material9);
+      noteone.position.y = 0;
+      noteone.castShadow = true;
+      scene.add(noteone);
+
+});
+    textureLoader.load('briefcase/briefcase2.jpg', function(texture) {
+      let material = new THREE.MeshStandardMaterial({map: texture});
+      const boxbottom1 = new THREE.BoxBufferGeometry(200, 1, 120);
+      let boxbottom = new THREE.Mesh(boxbottom1, material);
+      boxbottom.position.y = 0;
+      boxbottom.castShadow = true;
+      scene.add(boxbottom);
+
+
+
+      const boxtop1 = new THREE.BoxBufferGeometry(200, 1, 120);
+      let boxtop = new THREE.Mesh(boxtop1, material);
+      boxtop.position.y = 20;
+      boxtop.position.set(0,20,63);
+      boxtop.castShadow = true;
+      //boxtop.geometry.translate(0,0, -63);
+
+      scene.add(boxtop);
+      pivot.add( boxtop );
+
+      let boxwall1 = new THREE.BoxBufferGeometry(200, 10, 1);
+      let boxwallone = new THREE.Mesh(boxwall1, material);
+      let boxwallone2 = new THREE.Mesh(boxwall1, material);
+      let boxwallone3 = new THREE.Mesh(boxwall1, material);
+      let boxwallone4 = new THREE.Mesh(boxwall1, material);
+
+
+      boxwallone.position.y = 5;
+      boxwallone.position.x = 0;
+      boxwallone.position.z = 60;
+
+      boxwallone2.position.y = 5;
+      boxwallone2.position.x = 0;
+      boxwallone2.position.z = -60;
+
+      boxwallone3.position.y = 15;
+      boxwallone3.position.x = 0;
+      boxwallone3.position.z = 123;
+
+      boxwallone4.position.y = 15;
+      boxwallone4.position.x = 0;
+      boxwallone4.position.z = 3;
+
+      boxwallone.castShadow = true;
+      boxwallone2.castShadow = true;
+      boxwallone3.castShadow = true;
+      boxwallone4.castShadow = true;
+
+
+      scene.add(boxwallone);
+      scene.add(boxwallone2);
+
+      scene.add(boxwallone3);
+      pivot.add( boxwallone3);
+
+
+      scene.add(boxwallone4);
+      pivot.add( boxwallone4 );
+
+
+
+
+      let boxwall2 = new THREE.BoxBufferGeometry(1, 10, 120);
+      let boxwalltwo = new THREE.Mesh(boxwall2, material);
+      let boxwalltwo2 = new THREE.Mesh(boxwall2, material);
+      let boxwalltwo3 = new THREE.Mesh(boxwall2, material);
+      let boxwalltwo4 = new THREE.Mesh(boxwall2, material);
+
+      boxwalltwo.position.y = 5;
+      boxwalltwo.position.x = 100;
+      boxwalltwo2.position.y = 5;
+      boxwalltwo2.position.x = -100;
+      boxwalltwo3.position.y = 15;
+      boxwalltwo3.position.x = 100;
+      boxwalltwo3.position.z = 63;
+      boxwalltwo4.position.y = 15;
+
+      boxwalltwo4.position.x = -100;
+      boxwalltwo4.position.z = 63;
+
+
+      boxwalltwo.castShadow = true;
+      scene.add(boxwalltwo);
+      scene.add(boxwalltwo2);
+
+
+      scene.add(boxwalltwo3);
+      pivot.add( boxwalltwo3 );
+
+      scene.add(boxwalltwo4);
+      pivot.add( boxwalltwo4 );
+
+
+    });
+
+
+
+    let lock = new THREE.CylinderBufferGeometry(4, 4, 8, 10);
+    let material2= new THREE.MeshStandardMaterial({color: 0x808080});
+    let lock1 = new THREE.Mesh(lock, material2);
+    let lock2 = new THREE.Mesh(lock, material2);
+
+    lock1.position.y = 10;
+    lock1.position.x = 75;
+    lock1.position.z = -61;
+
+    lock1.rotation.z=1.5708;
+    scene.add(lock1);
+    lock2.position.y = 10;
+    lock2.position.x = -75;
+    lock2.position.z = -61;
+
+    lock2.rotation.z=1.5708;
+    scene.add(lock2);
+
+    textureLoader.load('briefcase/sand.jpg', function(texture) {
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set( 20, 20 );
+      let planeGeometry = new THREE.PlaneGeometry(10000, 10000, 10, 10);
+      let planeMaterial = new THREE.MeshPhongMaterial({map: texture, side: THREE.DoubleSide});
+      let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      plane.rotation.x = Math.PI / -2;
+      plane.receiveShadow = true;
+      scene.add(plane);
+    });
+    function CustomSinCurve( scale ) {
+
+    	THREE.Curve.call( this );
+
+    	this.scale = ( scale === undefined ) ? 1 : scale;
+
+    }
+
+    CustomSinCurve.prototype = Object.create( THREE.Curve.prototype );
+    CustomSinCurve.prototype.constructor = CustomSinCurve;
+
+    CustomSinCurve.prototype.getPoint = function ( t ) {
+
+    	var tx = t * 3 - 1.5;
+    	var ty = Math.sin(Math.PI * t );
+    	var tz = 0;
+
+    	return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
+
+    };
+
+    var path = new CustomSinCurve( 30 );
+    var geometry = new THREE.TubeGeometry( path, 40, 3, 40, false );
+    var material = new THREE.MeshBasicMaterial( { color: 0x010114 } );
+    var mesh = new THREE.Mesh( geometry, material );
+    mesh.position.y=7;
+    mesh.position.x=0;
+    mesh.position.z=57;
+    mesh.rotation.x=1.5708;
+
+    scene.add( mesh );
+
+
+
+    renderer = new THREE.WebGLRenderer({alpha: 1, antialias: true});
+    renderer.setSize(width, height);
+    renderer.shadowMap.enabled = true;
+
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    document.body.appendChild(renderer.domElement);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+
+    renderer.render(scene, camera);
+
+    controls.update();
+  }
+  function open(){
+    if(pivot.rotation.x>-.7){
+      pivot.rotation.x -= 0.01;
+
+    }
+    requestAnimationFrame(open);
+    renderer.render(scene, camera);
+    controls.update();
+
+
+  }
+
+  init();
+  animate();
+  document.body.addEventListener('click',open, true);   //animate();
+  </script>
+</html>

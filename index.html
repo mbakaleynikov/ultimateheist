@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HTML Canvas</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body{
+
+        background-color: coral;
+      }
+      #frame{
+        text-align: center;
+      }
+      h1 {
+        text-shadow: 0 1px 0 #ccc,
+                     0 2px 0 #c9c9c9,
+                     0 3px 0 #bbb,
+                     0 4px 0 #b9b9b9,
+                     0 5px 0 #aaa,
+                     0 6px 1px rgba(0,0,0,.1),
+                     0 0 5px rgba(0,0,0,.1),
+                     0 1px 3px rgba(0,0,0,.3),
+                     0 3px 5px rgba(255,255,255,.2);
+
+      }
+
+      canvas {
+        margin: 1px;
+      }
+      #c2{
+        padding-left:0px;
+      }
+      #c3{
+        padding: 100px;
+        padding-top:0px;
+        padding-bottom:0px;
+      }
+    /* change or remove this color */
+    </style>
+  </head>
+
+  <body>
+    <div id="frame">
+      <h1>Get ready for the heist of a lifetime!</h1>
+      <canvas id="c1" width="300" height="400"></canvas>
+      <canvas id="c2" width="300" height="400"></canvas>
+      <canvas id="c3" width="300" height="400"></canvas>
+
+      <image style='display: none;' id='diamond' src='diamondpic.svg' />
+      <image style='display: none;' id='exit' src='exit.svg' />
+      <image style='display: none;' id='trophy' src='trophy.svg' />
+      <image style='display: none;' id='larrow' src='larrow.svg' />
+
+
+
+    </div>
+    <script>
+
+    const canvas = document.querySelector('canvas');
+    const context = canvas.getContext('2d');
+
+    const canvas2 = document.querySelectorAll('canvas')[1];
+    const context2 = canvas2.getContext('2d');
+
+    const canvas3 = document.querySelectorAll('canvas')[2];
+    const context3 = canvas3.getContext('2d');
+    canvas.addEventListener("click", on_click1, false);
+        canvas2.addEventListener("click", on_click2, false);
+            canvas3.addEventListener("click", on_click3, false);
+
+
+  function on_click1(e) {
+      window.location = "diamond.html";
+
+  }
+  function on_click2(e) {
+    window.location = "road.html";
+
+}function on_click3(e) {
+
+    window.location = "briefcase.html";
+
+}
+          let width;
+          let height;
+
+          // set the number of canvas pixels, scaled for screen resolution
+          let pxScale = window.devicePixelRatio;
+
+          // use img from DOM
+          const image = document.getElementById('diamond');
+          const image2 = document.getElementById('exit');
+          const image3 = document.getElementById('trophy');
+          const image4 = document.getElementById('larrow');
+
+
+          let color=5;
+          let reverse=false;
+
+          function setup() {
+            // fixed canvas size
+            // fixed canvas size
+            width = canvas.width;
+            height = canvas.height;
+
+        // set the CSS display size
+          canvas.style.width = width + 'px';
+          canvas.style.height = height + 'px';
+          canvas2.style.width = width + 'px';
+          canvas2.style.height = height + 'px';
+          canvas3.style.width = width + 'px';
+          canvas3.style.height = height + 'px';
+
+          canvas.width = width * pxScale;
+          canvas.height = height * pxScale;
+          canvas2.width = width * pxScale;
+          canvas2.height = height * pxScale;
+          canvas3.width = width * pxScale;
+          canvas3.height = height * pxScale;
+
+        // normalize the coordinate system
+          context.scale(pxScale, pxScale);
+          context2.scale(pxScale, pxScale);
+          context3.scale(pxScale, pxScale);
+        draw();
+          }
+
+
+          function draw() {
+            context.drawImage(image, 0, 0, 300, 300);
+
+            context2.drawImage(image2, 0, 0, 300, 300);
+            context3.drawImage(image3, 0, 0, 300, 300);
+            context.drawImage(image4, 100, 250, 100, 100);
+
+
+
+                requestAnimationFrame(draw);
+        };
+
+        // when the whole page has loaded, including all dependent resources
+        window.addEventListener('load', setup);
+    </script>
+  </body>
+</html>
